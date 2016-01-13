@@ -1,1 +1,1 @@
-# ttt-web-service
+# minimax-server
