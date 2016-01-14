@@ -4,4 +4,4 @@
   (map vector (range (count board)) board))
 
 (defn stupid-move [board]
-  (first (first (filter (fn [[index mark]] (= :_ mark)) (zip-indexes board)))))
+  (first (first (filter (fn [[index mark]] (= "_" mark)) (zip-indexes board)))))
