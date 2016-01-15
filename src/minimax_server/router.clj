@@ -1,10 +1,13 @@
 (ns minimax-server.router
   (:import [java.util.function Function]
-           [scarvill.httpserver.response ResponseBuilder])
+           [scarvill.httpserver.response ResponseBuilder Status])
   (:require [clojure.string :as str]))
 
 (defn response-with-body [body]
-  (.build (.setBody (new ResponseBuilder) (byte-array (map byte (str body))))))
+  (-> (new ResponseBuilder)
+        (.setStatus (Status/OK))
+        (.setBody (byte-array (map byte (str body))))
+        .build))
 
 (defn get-current-player [request]
   (.getParameterValue request "current_player"))
