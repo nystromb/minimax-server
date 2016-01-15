@@ -13,6 +13,6 @@
   (str/split (.getParameterValue request "board") #","))
 
 (defn minimax-router [get-move]
-  (proxy [Function] []
-    (apply [request]
+  (reify Function
+    (apply [this request]
            (response-with-body (get-move (get-current-player request) (get-board request))))))
