@@ -8,11 +8,10 @@
 (describe "router"
 
   (defn request-with [current-player board]
-    (-> (new RequestBuilder)
+    (.build (doto (new RequestBuilder)
         (.setParameter "current_player" current-player)
         (.setParameter "board" board)
-        (.setURI "/")
-        .build))
+        (.setURI "/"))))
 
   (defn get-body-as-str [response]
     (String. (.getBody response)))

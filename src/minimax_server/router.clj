@@ -4,10 +4,9 @@
   (:require [clojure.string :as str]))
 
 (defn response-with-body [body]
-  (-> (new ResponseBuilder)
+  (.build (doto (new ResponseBuilder)
         (.setStatus (Status/OK))
-        (.setBody (byte-array (map byte (str body))))
-        .build))
+        (.setBody (byte-array (map byte (str body)))))))
 
 (defn get-current-player [request]
   (.getParameterValue request "current_player"))
