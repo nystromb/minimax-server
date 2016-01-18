@@ -1,6 +1,7 @@
 language: clojure
 notifications: 
   email: false 
-script: 
-  - mvn clean install -f ./java-httpserver/pom.xml
+script:
+  - cd java-httpserver 
+  - mvn clean install
   - lein spec
