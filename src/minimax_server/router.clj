@@ -3,6 +3,8 @@
            [scarvill.httpserver.response ResponseBuilder Status])
   (:require [clojure.string :as str]))
 
+(set! *warn-on-reflection* true)
+
 (defn response-with-body [body]
   (.build (doto (new ResponseBuilder)
         (.setStatus (Status/OK))
