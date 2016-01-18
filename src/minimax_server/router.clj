@@ -3,11 +3,12 @@
            [scarvill.httpserver.response ResponseBuilder Status])
   (:require [clojure.string :as str]))
 
+(set! *warn-on-reflection* true)
+
 (defn response-with-body [body]
-  (-> (new ResponseBuilder)
+  (.build (doto (new ResponseBuilder)
         (.setStatus (Status/OK))
-        (.setBody (byte-array (map byte (str body))))
-        .build))
+        (.setBody (byte-array (map byte (str body)))))))
 
 (defn get-current-player [request]
   (.getParameterValue request "current_player"))
