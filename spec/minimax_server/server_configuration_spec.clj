@@ -1,4 +1,4 @@
- (ns minimax-server.server-configuration-spec
+(ns minimax-server.server-configuration-spec
   (:import [scarvill.httpserver.server ServerConfiguration HttpService])
   (:require [speclj.core :refer :all]
             [minimax-server.server-configuration :refer :all]))

@@ -1,4 +1,4 @@
- (ns minimax-server.server-configuration
+(ns minimax-server.server-configuration
   (:import [scarvill.httpserver.server ServerConfiguration HttpService Logger]
            [java.io PrintStream ByteArrayOutputStream])
   (:require [minimax-server.router :refer :all]))

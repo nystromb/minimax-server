@@ -1,4 +1,4 @@
- (ns minimax-server.core
+(ns minimax-server.core
   (:import [scarvill.httpserver.server Server])
   (:require [minimax-server.computer-player :as computer]
             [minimax-server.server-configuration :refer [minimax-server-config]]))
