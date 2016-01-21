@@ -1,3 +1,0 @@
-[submodule "java-httpserver"]
-	path = java-httpserver
-	url = https://github.com/scarvill91/java-httpserver.git
