@@ -24,10 +24,10 @@
 
   (it "parses the current player from request parameters"
       (let [return-active-player (fn [state] (:active-player state))]
-        (should= "x"
+        (should= ":x"
                  (get-body-as-str (.apply (minimax-router return-active-player) example-request)))))
 
   (it "parses the board state from request parameters"
-      (let [return-board-string (fn [state] (str/join " " (:board state)))]
-        (should= "x o x o x o x o _"
-                 (get-body-as-str (.apply (minimax-router return-board-string) example-request))))))
+      (let [return-board (fn [state] (:board state))]
+        (should= "[:x :o :x :o :x :o :x :o :_]"
+                 (get-body-as-str (.apply (minimax-router return-board) example-request))))))

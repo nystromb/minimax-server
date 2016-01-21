@@ -7,7 +7,7 @@
 
 (set! *warn-on-reflection* true)
 
-(def blank-mark "_")
+(def blank-mark :_)
 
 (defn other-mark [mark marks]
   (first (remove #(= mark %) marks)))
@@ -18,9 +18,9 @@
         (.setBody (byte-array (map byte (str body)))))))
 
 (defn get-game-state [^Request request]
-  (let [board (str/split (.getParameterValue request "board") #",")
-        active-player (.getParameterValue request "current_player")]
-    (new-state active-player (other-mark active-player ["x" "o"]) board)))
+  (let [board (vec (map keyword (str/split (.getParameterValue request "board") #",")))
+        active-player (keyword (.getParameterValue request "current_player"))]
+    (new-state active-player (other-mark active-player [:x :o]) board)))
 
 (defn minimax-router [get-move]
   (reify Function (apply [this request]
