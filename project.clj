@@ -1,6 +1,6 @@
 (defproject minimax-server "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "A Tic Tac Toe minimax web api built on scarvill91/java-httpserver project"
+  :url "http://107.170.25.194:5000/"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :resource-paths ["java-httpserver/target/httpserver-1.0-SNAPSHOT.jar"]
