@@ -12,15 +12,15 @@
   (any? #(winning-line? % player-mark board) board-line-indexes))
 
 (defn is-draw? [board]
-  (not-any? #(= "_" %) board))
+  (not-any? #(= :_ %) board))
 
 (defn game-over? [board]
-  (or (is-draw? board) (player-won? "x" board) (player-won? "o" board)))
+  (or (is-draw? board) (player-won? :x board) (player-won? :o board)))
 
 (defn mark-board [board mark space]
-  (if (= (nth board space) "_")
+  (if (= (nth board space) :_)
       (assoc board space mark)))
 
 (defn available-spaces [board]
-  (keys (filter #(= (second %) "_")
+  (keys (filter #(= (second %) :_)
     (zipmap (range (count board)) board))))
