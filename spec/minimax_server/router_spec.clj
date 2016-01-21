@@ -18,9 +18,6 @@
 
   (def example-request (request-with "x" "x,o,x,o,x,o,x,o,_"))
 
-  (it "returns a response"
-     (should-be-a Response (.apply (minimax-router (fn [_ _] "foo")) example-request)))
-
   (it "returns the result of evaluating given function in the body of the response"
       (should= "foo"
                (get-body-as-str (.apply (minimax-router (fn [_ _] "foo")) example-request))))
