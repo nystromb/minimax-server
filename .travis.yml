@@ -1,9 +1,7 @@
 language: clojure
 jdk:
   - oraclejdk8
-notifications: 
-  email: false 
+notifications:
+  email: false
 script:
-  - cd java-httpserver 
-  - mvn clean install
   - lein spec
