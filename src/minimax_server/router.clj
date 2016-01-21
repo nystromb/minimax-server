@@ -1,22 +1,27 @@
 (ns minimax-server.router
   (:import [java.util.function Function]
-           [scarvill.httpserver.response ResponseBuilder Status])
-  (:require [clojure.string :as str]))
+           [scarvill.httpserver.response ResponseBuilder Status]
+           [scarvill.httpserver.request Request])
+  (:require [clojure.string :as str]
+            [minimax-server.minimax :refer [new-state]]))
 
 (set! *warn-on-reflection* true)
+
+(def blank-mark "_")
+
+(defn other-mark [mark marks]
+  (first (remove #(= mark %) marks)))
 
 (defn response-with-body [body]
   (.build (doto (new ResponseBuilder)
         (.setStatus (Status/OK))
         (.setBody (byte-array (map byte (str body)))))))
 
-(defn get-current-player [request]
-  (.getParameterValue request "current_player"))
-
-(defn get-board [request]
-  (str/split (.getParameterValue request "board") #","))
+(defn get-game-state [^Request request]
+  (let [board (str/split (.getParameterValue request "board") #",")
+        active-player (.getParameterValue request "current_player")]
+    (new-state active-player (other-mark active-player ["x" "o"]) board)))
 
 (defn minimax-router [get-move]
-  (reify Function
-    (apply [this request]
-           (response-with-body (get-move (get-current-player request) (get-board request))))))
+  (reify Function (apply [this request]
+      (response-with-body (get-move (get-game-state request))))))
