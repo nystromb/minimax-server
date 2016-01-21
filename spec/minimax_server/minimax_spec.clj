@@ -103,9 +103,9 @@
         (should= 6 (minimax state))))
 
     (it "returns a winning move when a fork is not possible"
-      (let [state (new-state "o" "x" ["x" "_" "_"
+      (let [state (new-state "o" "x" ["x" "x" "_"
                                       "o" "o" "_"
-                                      "x" "x" "_"])]
+                                      "x" "_" "_"])]
         (should= 5 (minimax state))))
 
     (it "returns the move with the lower index when both a fork or a win is possible"
