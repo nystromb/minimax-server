@@ -9,8 +9,8 @@
     (logRequest [_] nil)
     (logException [_] nil)))
 
-(defn minimax-server-config [port get-move]
+(defn minimax-server-config [port router]
   (proxy [ServerConfiguration] []
     (getPort [] port)
     (getPublicDirectory [] nil)
-    (getService [] (new HttpService null-logger (minimax-router get-move)))))
+    (getService [] (new HttpService null-logger router))))

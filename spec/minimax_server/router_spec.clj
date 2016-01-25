@@ -1,33 +1,33 @@
 (ns minimax-server.router-spec
-  (:import [scarvill.httpserver.response Response]
+  (:import [java.util.function Function]
+           [scarvill.httpserver.response ResponseBuilder Status]
            [scarvill.httpserver.request Request RequestBuilder Method])
   (:require [speclj.core :refer :all]
-            [minimax-server.router :refer :all]
-            [clojure.string :as str]))
+            [minimax-server.router :refer :all]))
 
-(describe "router"
+(defn new-request [url]
+  (.build (doto (new RequestBuilder)
+    (.setURI url)
+    (.setMethod Method/GET))))
 
-  (defn request-with [current-player board]
-    (.build (doto (new RequestBuilder)
-        (.setParameter "current_player" current-player)
-        (.setParameter "board" board)
-        (.setURI "/"))))
+(defn new-response [body]
+  (.build
+    (doto (new ResponseBuilder)
+      (.setStatus (Status/OK))
+      (.setBody (byte-array (map byte (str body)))))))
 
-  (defn get-body-as-str [response]
-    (String. (.getBody response)))
+(defn get-body-as-str [response]
+  (String. (.getBody response)))
 
-  (def example-request (request-with "x" "x,o,x,o,x,o,x,o,_"))
+(defn mock-handler [value-to-return]
+  (reify Function (apply [this request]
+    (new-response value-to-return))))
 
-  (it "returns the result of evaluating given function in the body of the response"
-      (should= "foo"
-               (get-body-as-str (.apply (minimax-router (fn [_] "foo")) example-request))))
+(describe "routing scheme"
 
-  (it "parses the current player from request parameters"
-      (let [return-active-player (fn [state] (:active-player state))]
-        (should= ":x"
-                 (get-body-as-str (.apply (minimax-router return-active-player) example-request)))))
-
-  (it "parses the board state from request parameters"
-      (let [return-board (fn [state] (:board state))]
-        (should= "[:x :o :x :o :x :o :x :o :_]"
-                 (get-body-as-str (.apply (minimax-router return-board) example-request))))))
+  (it "adds a route for each url-handler mapping"
+    (let [request ()
+          routes {"/" (mock-handler "root route") "/api" (mock-handler "api route")}
+          root-response (get-body-as-str (.apply (new-router routes) (new-request "/")))
+          foo-response (get-body-as-str (.apply (new-router routes) (new-request "/api")))]
+      (should (and (= "root route" root-response) (= "api route" foo-response))))))
