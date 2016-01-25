@@ -1,7 +1,6 @@
 (ns minimax-server.router
   (:import [scarvill.httpserver.routing RouteRequest]
-           [scarvill.httpserver.request Method])
-  (:require [minimax-server.best-move :refer [best-move]]))
+           [scarvill.httpserver.request Method]))
 
 (defn new-router [routes]
   (let [router (new RouteRequest)]

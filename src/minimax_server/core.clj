@@ -8,9 +8,8 @@
 
 (def ttt-router
   (new-router {
-    "/api/best_move" (best-move)
-    "/api/game_state" (game-state-service)
-    }))
+    "/api/best_move" (best-move-service)
+    "/api/game_state" (game-state-service)}))
 
 (def ttt-server
   (new Server (minimax-server-config 5000 ttt-router)))

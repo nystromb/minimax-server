@@ -30,10 +30,10 @@
       (with-redefs [minimax (mock-minimax :x [:x :o :x :o :x :o :x :o :_])]
         (should=
           "expectation met"
-          (get-body-as-str (.apply (best-move) example-request))))))
+          (get-body-as-str (.apply (best-move-service) example-request))))))
 
   (it "returns the best move selected via minimax in the response body"
     (let [example-request (request-with "o" "x,x,_,o,_,_,_,_,_")]
       (should=
         "2"
-        (get-body-as-str (.apply (best-move) example-request))))))
+        (get-body-as-str (.apply (best-move-service) example-request))))))

@@ -23,6 +23,6 @@
         active-player (keyword (.getParameterValue request "current_player"))]
     (new-state active-player (other-mark active-player [:x :o]) board)))
 
-(defn best-move []
+(defn best-move-service []
   (reify Function (apply [this request]
       (response-with-body (minimax (get-game-state request))))))
