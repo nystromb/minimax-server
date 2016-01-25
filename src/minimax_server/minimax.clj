@@ -30,7 +30,12 @@
 (defn max-by [element-to-num elements]
   (key (first (sort-by val > (zipmap elements (map element-to-num elements))))))
 
+(defn best-successor-state [successor-states]
+  (max-by (comp - recursively-evaluate) successor-states))
+
 (defn minimax [initial-state]
-  (let [successor-states (generate-successors initial-state)
-        best-successor-state (max-by (comp - recursively-evaluate) successor-states)]
-    (last-marked-space initial-state best-successor-state)))
+  (if (terminal-state? initial-state)
+    nil
+    (last-marked-space initial-state
+      (best-successor-state
+        (generate-successors initial-state)))))

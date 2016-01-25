@@ -98,22 +98,28 @@
 
     (it "returns the move that blocks opponent when they could win next turn"
       (let [state (new-state :o :x [:x :_ :_
-                                      :x :o :_
-                                      :_ :_ :_])]
+                                    :x :o :_
+                                    :_ :_ :_])]
         (should= 6 (minimax state))))
 
     (it "returns a winning move when a fork is not possible"
       (let [state (new-state :o :x [:x :x :_
-                                      :o :o :_
-                                      :x :_ :_])]
+                                    :o :o :_
+                                    :x :_ :_])]
         (should= 5 (minimax state))))
+
+    (it "returns nil when there are no possible moves"
+      (let [state (new-state :o :x [:x :x :o
+                                    :o :o :x
+                                    :x :x :o])]
+        (should= nil (minimax state))))
 
     (it "returns the move with the lower index when both a fork or a win is possible"
       (let [fork-state (new-state :x :o [:x :_ :_
-                                           :x :o :o
-                                           :_ :_ :_])
+                                         :x :o :o
+                                         :_ :_ :_])
             win-state (new-state :o :x [:x :x :_
-                                          :_ :o :_
-                                          :_ :o :_])]
+                                        :_ :o :_
+                                        :_ :o :_])]
         (do (should= 1 (minimax fork-state))
             (should= 2 (minimax win-state)))))))
