@@ -1,7 +1,7 @@
 (ns minimax-server.server-configuration
   (:import [scarvill.httpserver.server ServerConfiguration HttpService Logger]
            [java.io PrintStream ByteArrayOutputStream])
-  (:require [minimax-server.router :refer :all]))
+  (:require [minimax-server.best-move :refer :all]))
 
 (def null-logger
   (proxy [Logger] [(new PrintStream (new ByteArrayOutputStream))]
@@ -13,4 +13,4 @@
   (proxy [ServerConfiguration] []
     (getPort [] port)
     (getPublicDirectory [] nil)
-    (getService [] (new HttpService null-logger (minimax-router get-move)))))
+    (getService [] (new HttpService null-logger (best-move)))))

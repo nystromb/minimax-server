@@ -1,9 +1,9 @@
-(ns minimax-server.router
+(ns minimax-server.best-move
   (:import [java.util.function Function]
            [scarvill.httpserver.response ResponseBuilder Status]
            [scarvill.httpserver.request Request])
   (:require [clojure.string :as str]
-            [minimax-server.minimax :refer [new-state]]))
+            [minimax-server.minimax :refer [new-state minimax]]))
 
 (set! *warn-on-reflection* true)
 
@@ -22,6 +22,6 @@
         active-player (keyword (.getParameterValue request "current_player"))]
     (new-state active-player (other-mark active-player [:x :o]) board)))
 
-(defn minimax-router [get-move]
+(defn best-move []
   (reify Function (apply [this request]
-      (response-with-body (get-move (get-game-state request))))))
+      (response-with-body (minimax (get-game-state request))))))
