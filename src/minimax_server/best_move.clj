@@ -13,9 +13,10 @@
   (first (remove #(= mark %) marks)))
 
 (defn response-with-body [body]
-  (.build (doto (new ResponseBuilder)
-        (.setStatus (Status/OK))
-        (.setBody (byte-array (map byte (str body)))))))
+  (.build
+    (doto (new ResponseBuilder)
+      (.setStatus (Status/OK))
+      (.setBody (byte-array (map byte (str body)))))))
 
 (defn get-game-state [^Request request]
   (let [board (vec (map keyword (str/split (.getParameterValue request "board") #",")))
