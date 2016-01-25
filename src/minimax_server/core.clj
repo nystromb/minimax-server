@@ -6,7 +6,7 @@
             [minimax-server.best-move :refer [best-move]]))
 
 (def ttt-router
-  (new-router {"/" (best-move)}))
+  (new-router {"/api/best_move" (best-move)}))
 
 (def ttt-server
   (new Server (minimax-server-config 5000 ttt-router)))
