@@ -3,10 +3,14 @@
   (:require [minimax-server.minimax :refer [minimax]]
             [minimax-server.server-configuration :refer [minimax-server-config]]
             [minimax-server.router :refer [new-router]]
-            [minimax-server.best-move :refer [best-move]]))
+            [minimax-server.best-move :refer [best-move]]
+            [minimax-server.game-state :refer [game-state-service]]))
 
 (def ttt-router
-  (new-router {"/api/best_move" (best-move)}))
+  (new-router {
+    "/api/best_move" (best-move)
+    "/api/game_state" (game-state-service)
+    }))
 
 (def ttt-server
   (new Server (minimax-server-config 5000 ttt-router)))
