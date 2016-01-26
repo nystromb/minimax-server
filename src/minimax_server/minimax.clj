@@ -1,6 +1,7 @@
 (ns minimax-server.minimax
-  (:require [minimax-server.tic-tac-toe :refer :all]
-            [clojure.set :refer [difference]]))
+  (:require
+    [minimax-server.tic-tac-toe :refer :all]
+    [clojure.set :refer [difference]]))
 
 (defn new-state [active-player inactive-player board]
   {:active-player active-player :inactive-player inactive-player :board board})

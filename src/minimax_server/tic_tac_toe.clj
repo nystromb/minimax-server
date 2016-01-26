@@ -22,5 +22,6 @@
       (assoc board space mark)))
 
 (defn available-spaces [board]
-  (keys (filter #(= (second %) :_)
+  (keys (filter
+    #(= (second %) :_)
     (zipmap (range (count board)) board))))

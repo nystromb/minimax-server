@@ -1,7 +1,8 @@
 (ns minimax-server.minimax-spec
-  (:require [speclj.core :refer :all]
-            [minimax-server.tic-tac-toe :refer :all]
-            [minimax-server.minimax :refer :all]))
+  (:require
+    [speclj.core :refer :all]
+    [minimax-server.tic-tac-toe :refer :all]
+    [minimax-server.minimax :refer :all]))
 
 (describe "tic tac toe minimax algorithm"
 
@@ -52,13 +53,13 @@
                    :_ :_ :_]]
         (should= 1 (recursively-evaluate (new-state :x :o board)))))
 
-    (it "returns -1 if the current player can't prevent the other player from winning"
+    (it "returns -1 if current player can't prevent other player from winning"
       (let [board [:x :x :_
                    :x :_ :_
                    :_ :_ :_]]
         (should= -1 (recursively-evaluate (new-state :o :x board)))))
 
-    (it "returns 0 if the game would end in a draw with both players playing optimally"
+    (it "returns 0 if the game would end in a draw with optimal play"
       (let [board [:x :x :o
                    :o :o :_
                    :x :_ :_]]
@@ -66,21 +67,26 @@
 
   (context "generating subsequent game states"
 
-    (it "returns a game state for every available move on board in given game state"
+    (it "returns a game state for every available move on board"
       (let [board [:_ :_ :_
                    :_ :_ :_
                    :_ :_ :_]]
         (should= (count board)
                  (count (generate-successors (new-state :x :o board))))))
 
-    (it "returns game states where the active and inactive players have been swapped"
-      (let [active-player :x inactive-player :o
-            initial-state (new-state active-player inactive-player [:_ :_ :_
-                                                                    :_ :_ :_
-                                                                    :_ :_ :_])
-            players-swapped (fn [state] (and (= active-player (:inactive-player state))
-                                             (= inactive-player (:active-player state))))]
-        (should-be #(every? players-swapped %) (generate-successors initial-state))))
+    (it "swaps active and inactive players in returned game states"
+      (let [active-player :x
+            inactive-player :o
+            board [:_ :_ :_
+                   :_ :_ :_
+                   :_ :_ :_]
+            initial-state (new-state active-player inactive-player board)
+            players-swapped? (fn [state]
+              (and
+                (= active-player (:inactive-player state))
+                (= inactive-player (:active-player state))))]
+        (should-be
+          #(every? players-swapped? %) (generate-successors initial-state))))
 
     (it "returns all possible game states that can result from given game state"
       (let [active-player :x inactive-player :o
@@ -92,7 +98,9 @@
             successor-state (fn [marked-space]
               (new-state inactive-player active-player
                 (mark-board board active-player marked-space)))]
-        (should== (map successor-state available-spaces) (generate-successors initial-state)))))
+        (should==
+          (map successor-state available-spaces)
+          (generate-successors initial-state)))))
 
   (context "applying the minimax algorithm"
 
@@ -114,12 +122,13 @@
                                     :x :x :o])]
         (should= nil (minimax state))))
 
-    (it "returns the move with the lower index when both a fork or a win is possible"
+    (it "returns move with the lowest index if both fork and win are possible"
       (let [fork-state (new-state :x :o [:x :_ :_
                                          :x :o :o
                                          :_ :_ :_])
             win-state (new-state :o :x [:x :x :_
                                         :_ :o :_
                                         :_ :o :_])]
-        (do (should= 1 (minimax fork-state))
-            (should= 2 (minimax win-state)))))))
+        (should (and
+          (= 1 (minimax fork-state))
+          (= 2 (minimax win-state))))))))

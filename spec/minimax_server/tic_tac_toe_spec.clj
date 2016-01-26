@@ -1,8 +1,9 @@
 (ns minimax-server.tic-tac-toe-spec
-  (:require [speclj.core :refer :all]
-            [minimax-server.tic-tac-toe :refer :all]))
+  (:require
+    [speclj.core :refer :all]
+    [minimax-server.tic-tac-toe :refer :all]))
 
-(describe "tic tac toe minimax helper functions"
+(describe "tic tac toe"
 
   (context "getting a board's available spaces"
 
@@ -74,10 +75,10 @@
       (let [board [:o :_ :_
                    :_ :o :_
                    :_ :_ :o]]
-          (should-be game-over? board)))
+        (should-be game-over? board)))
 
     (it "should not be game over if there is no winning line"
       (let [board [:o :x :o
                    :_ :x :_
                    :o :_ :_]]
-          (should-not-be game-over? board)))))
+        (should-not-be game-over? board)))))
