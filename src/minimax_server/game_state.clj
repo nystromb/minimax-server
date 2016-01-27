@@ -7,6 +7,7 @@
     [minimax-server.tic-tac-toe :refer [is-draw? game-over?]]
     [minimax-server.minimax :refer [new-state minimax]]
     [minimax-server.parse-request :as parse]
+    [minimax-server.generate-response :refer [generate-response]]
     [clojure.string :as str]
     [clojure.data.json :as json]))
 
@@ -16,16 +17,10 @@
     (game-over? board) "won"
     :else "inProgress"))
 
-(defn game-state-response [best-move game-state]
-  (let [body (json/write-str {:bestMove best-move :gameState game-state})]
-    (.build
-    (doto (new ResponseBuilder)
-      (.setStatus (Status/OK))
-      (.setBody (byte-array (map byte (str body))))))))
-
 (defn game-state-service []
   (reify Function (apply [this request]
     (let [game-state (parse/get-game-state request)]
-      (game-state-response
-        (minimax game-state)
-        (game-state-label game-state))))))
+      (generate-response
+        (json/write-str {
+          :bestMove (minimax game-state)
+          :gameState (game-state-label game-state)}))))))
