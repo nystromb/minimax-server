@@ -51,6 +51,20 @@
                    :o :x :x]]
         (should= false (player-won? :o board)))))
 
+  (context "draw game detection"
+
+    (it "returns true if board is full and no player has won"
+      (let [board [:x :o :x
+                   :x :o :o
+                   :o :x :x]]
+        (should= true (is-draw? board))))
+
+    (it "returns false if board is full and a player has won"
+      (let [board [:x :x :x
+                   :x :o :o
+                   :o :o :x]]
+        (should= false (is-draw? board)))))
+
   (context "game over detection"
 
     (it "should be false if game is not over"

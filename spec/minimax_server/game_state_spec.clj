@@ -30,4 +30,9 @@
   (it "reports that game is 'inProgress' when game is not over"
     (let [request (ttt-request "x" "x,x,_,o,o,_,_,_,_")]
       (should= "inProgress"
+        (:gameState (response-data (.apply (game-state-service) request))))))
+
+  (it "reports that the game is 'won' when board is full and a player won"
+    (let [request (ttt-request "o" "x,x,x,o,o,x,x,o,o")]
+      (should= "won"
         (:gameState (response-data (.apply (game-state-service) request)))))))
