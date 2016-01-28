@@ -1,0 +1,53 @@
+body {
+  padding: 30px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 2.5vw;
+}
+
+.prompt {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.board {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.table tbody tr td {
+  width: 33.33vw;
+  padding: 10.25% 0;
+  text-align: center;
+  font-size: 5vw;
+}
+
+.marked-space {
+  color: black;
+}
+
+.unmarked-space {
+  color: white;
+}
+
+.unmarked-space:hover {
+  color: #EEE;
+  background-color: #EEE;
+}
+
+.reset-button {
+  display: block;
+  margin: 0 auto;
+}
+
+.glyphicon-screenshot {
+  margin-left: 1%;
+}

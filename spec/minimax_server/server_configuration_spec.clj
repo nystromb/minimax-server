@@ -12,13 +12,13 @@
 (describe "server configuration"
 
   (it "implements ServerConfiguration"
-    (should-be-a ServerConfiguration (minimax-server-config 5000 mock-router)))
+    (should-be-a ServerConfiguration (minimax-server-config 0 "" mock-router)))
 
   (it "returns port given at init"
-    (should= 5000 (.getPort (minimax-server-config 5000 mock-router))))
+    (should= 5000 (.getPort (minimax-server-config 5000 "" mock-router))))
 
-  (it "returns nil for public directory"
-    (should= nil (.getPublicDirectory (minimax-server-config 5000 mock-router))))
+  (it "returns public directory given at init"
+    (should= "/public" (.getPublicDirectory (minimax-server-config 0 "/public" mock-router))))
 
   (it "returns an HttpService"
-    (should-be-a HttpService (.getService (minimax-server-config 5000 mock-router)))))
+    (should-be-a HttpService (.getService (minimax-server-config 0 "" mock-router)))))

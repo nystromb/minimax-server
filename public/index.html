@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Totally Tactical Tic Tac Toe!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <h1 class="page-title">Totally Tactical Tic Tac Toe!<span class="glyphicon glyphicon-screenshot"></span></h1>
+    <h3 class="prompt">say that five times fast (or I guess player X could go...)</h3>
+    <div id="container" class="row board">
+      <table border="1" class="table table-bordered">
+        <tbody>
+          <tr>
+            <td id="0" class="unmarked-space">_</td>
+            <td id="1" class="unmarked-space">_</td>
+            <td id="2" class="unmarked-space">_</td>
+          </tr>
+          <tr>
+            <td id="3" class="unmarked-space">_</td>
+            <td id="4" class="unmarked-space">_</td>
+            <td id="5" class="unmarked-space">_</td>
+          </tr>
+          <tr>
+            <td id="6" class="unmarked-space">_</td>
+            <td id="7" class="unmarked-space">_</td>
+            <td id="8" class="unmarked-space">_</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="reset-button btn-danger btn-lg">Reset <span class="glyphicon glyphicon-refresh"></span>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+      <script src="js/game_prompt.js"></script>
+      <script src="js/game_state.js"></script>
+      <script src="js/event_handlers.js"></script>
+    </button>
+  </body>
+</html>
