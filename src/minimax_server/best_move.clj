@@ -1,8 +1,6 @@
 (ns minimax-server.best-move
   (:import
-    [java.util.function Function]
-    [scarvill.httpserver.response ResponseBuilder Status]
-    [scarvill.httpserver.request Request])
+    [java.util.function Function])
   (:require
     [clojure.string :as str]
     [minimax-server.parse-request :as parse]

@@ -1,10 +1,8 @@
 (ns minimax-server.parse-request
   (:import
-    [java.util.function Function]
-    [scarvill.httpserver.response ResponseBuilder Status]
     [scarvill.httpserver.request Request])
   (:require
-    [minimax-server.minimax :refer [new-state minimax]]
+    [minimax-server.minimax :refer [new-state]]
     [clojure.string :as str]))
 
 (defn other-mark [mark marks]

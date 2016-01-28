@@ -11,8 +11,10 @@
     (logRequest [_] nil)
     (logException [_] nil)))
 
-(defn minimax-server-config [port router]
-  (proxy [ServerConfiguration] []
-    (getPort [] port)
-    (getPublicDirectory [] nil)
-    (getService [] (new HttpService null-logger router))))
+(defn minimax-server-config [port public-directory router]
+  (do
+    (.routeToResourcesInDirectory router (.toPath (clojure.java.io/file public-directory)))
+    (proxy [ServerConfiguration] []
+      (getPort [] port)
+      (getPublicDirectory [] public-directory)
+      (getService [] (new HttpService null-logger router)))))

@@ -1,6 +1,6 @@
 (ns minimax-server.spec-helper
   (:import
-    [scarvill.httpserver.request Request RequestBuilder Method]))
+    [scarvill.httpserver.request RequestBuilder]))
 
 (defn ttt-request [current-player board]
   "Constructs a new Request object with the given current player and board"
