@@ -1,14 +1,11 @@
 (ns minimax-server.game-state
   (:import
-    [java.util.function Function]
-    [scarvill.httpserver.response ResponseBuilder Status]
-    [scarvill.httpserver.request Request])
+    [java.util.function Function])
   (:require
     [minimax-server.tic-tac-toe :refer [is-draw? game-over?]]
-    [minimax-server.minimax :refer [new-state minimax]]
+    [minimax-server.minimax :refer [minimax]]
     [minimax-server.parse-request :as parse]
     [minimax-server.generate-response :refer [generate-response]]
-    [clojure.string :as str]
     [clojure.data.json :as json]))
 
 (defn game-state-label [{:keys [board active-player inactive-player]}]

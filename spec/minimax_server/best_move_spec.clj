@@ -1,13 +1,9 @@
 (ns minimax-server.best-move-spec
-  (:import
-    [scarvill.httpserver.response Response]
-    [scarvill.httpserver.request Request RequestBuilder Method])
   (:require
     [speclj.core :refer :all]
     [minimax-server.spec-helper :refer :all]
     [minimax-server.best-move :refer :all]
-    [minimax-server.minimax :refer [minimax]]
-    [clojure.string :as str]))
+    [minimax-server.minimax :refer [minimax]]))
 
 (defn mock-minimax [expected-player expected-board]
   (fn [game-state]

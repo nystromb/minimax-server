@@ -1,8 +1,6 @@
 (ns minimax-server.generate-response
   (:import
-    [scarvill.httpserver.response ResponseBuilder Status])
-  (:require
-    [clojure.data.json :as json]))
+    [scarvill.httpserver.response ResponseBuilder Status]))
 
 (defn generate-response [body]
   (.build

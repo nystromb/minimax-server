@@ -1,9 +1,7 @@
 (ns minimax-server.server-configuration
   (:import
     [scarvill.httpserver.server ServerConfiguration HttpService Logger]
-    [java.io PrintStream ByteArrayOutputStream]
-    [java.nio.file Paths]
-    [java.net URI])
+    [java.io PrintStream ByteArrayOutputStream])
   (:require
     [minimax-server.router :refer :all]))
 

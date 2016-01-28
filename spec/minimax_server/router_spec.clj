@@ -2,7 +2,7 @@
   (:import
     [java.util.function Function]
     [scarvill.httpserver.response ResponseBuilder Status]
-    [scarvill.httpserver.request Request RequestBuilder Method])
+    [scarvill.httpserver.request RequestBuilder Method])
   (:require
     [speclj.core :refer :all]
     [minimax-server.spec-helper :refer :all]

@@ -1,6 +1,4 @@
 (ns minimax-server.game-state-spec
-  (:import
-    [scarvill.httpserver.request RequestBuilder])
   (:require
     [speclj.core :refer :all]
     [minimax-server.spec-helper :refer :all]

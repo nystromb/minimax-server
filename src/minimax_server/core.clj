@@ -4,7 +4,6 @@
     [scarvill.httpserver.resource FileResource]
     [scarvill.httpserver.routing GetRouteResource])
   (:require
-    [minimax-server.minimax :refer [minimax]]
     [minimax-server.server-configuration :refer [minimax-server-config]]
     [minimax-server.router :refer [new-router]]
     [minimax-server.best-move :refer [best-move-service]]
