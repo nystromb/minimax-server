@@ -11,7 +11,7 @@
 
 (defn web-interface []
   (new GetRouteResource
-    (new FileResource (.toPath (clojure.java.io/file "./public/index.html")))))
+    (new FileResource (.toPath (clojure.java.io/file "./web_interface/dist/index.html")))))
 
 (def ttt-router
   (new-router {
@@ -22,4 +22,4 @@
 (defn -main []
   (.start
     (new Server
-      (minimax-server-config 5000 "./public" ttt-router))))
+      (minimax-server-config 5000 "./web_interface/dist" ttt-router))))
