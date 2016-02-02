@@ -1,0 +1,3 @@
+[submodule "web_interface"]
+	path = web_interface
+	url = https://github.com/nystromb/tic-tac-toe-web-app.git
