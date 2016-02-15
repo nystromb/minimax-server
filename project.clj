@@ -8,4 +8,4 @@
   :profiles {:dev {:dependencies [[speclj "3.3.1"]]}}
   :plugins [[speclj "3.3.1"]]
   :test-paths ["spec"]
-  :main minimax-server.core)
+  :main minimax-server.server)
