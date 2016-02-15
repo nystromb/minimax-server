@@ -1,6 +1,9 @@
-(ns minimax-server.tic-tac-toe)
+(ns minimax-server.game)
 
 (def any? (comp boolean some))
+
+(defn other-mark [mark marks]
+  (first (remove #(= mark %) marks)))
 
 (defn winning-line? [line-indexes mark board]
   (every? #(= mark %) (map #(nth board %) line-indexes)))

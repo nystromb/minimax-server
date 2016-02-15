@@ -1,11 +1,10 @@
-(ns minimax-server.server-configuration-spec
+(ns minimax-server.server-spec
   (:import
     [scarvill.httpserver.server ServerConfiguration HttpService]
-    [scarvill.httpserver.routing RouteRequest]
-    [java.util.function Function])
+    [scarvill.httpserver.routing RouteRequest])
   (:require
     [speclj.core :refer :all]
-    [minimax-server.server-configuration :refer :all]))
+    [minimax-server.server :refer [minimax-server-config]]))
 
 (defn router [] (new RouteRequest))
 

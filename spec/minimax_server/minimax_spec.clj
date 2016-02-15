@@ -1,8 +1,8 @@
 (ns minimax-server.minimax-spec
   (:require
     [speclj.core :refer :all]
-    [minimax-server.tic-tac-toe :refer :all]
-    [minimax-server.minimax :refer :all]))
+    [minimax-server.minimax :refer [terminal-state? new-state score-state generate-successors minimax]]
+    [minimax-server.game :refer [mark-board available-spaces]]))
 
 (describe "tic tac toe minimax algorithm"
 
@@ -32,38 +32,38 @@
       (let [board [:x :x :x
                    :_ :_ :_
                    :_ :_ :_]]
-        (should= 1 (recursively-evaluate (new-state :x :o board)))))
+        (should= 1 (score-state (new-state :x :o board)))))
 
     (it "returns -1 if the player other than the current player won"
       (let [board [:x :x :x
                    :_ :_ :_
                    :_ :_ :_]]
-        (should= -1 (recursively-evaluate (new-state :o :x board)))))
+        (should= -1 (score-state (new-state :o :x board)))))
 
     (it "returns 0 when neither player has won"
       (let [board [:x :o :x
                    :x :o :o
                    :o :x :x]]
-        (do (should= 0 (recursively-evaluate (new-state :x :o board)))
-            (should= 0 (recursively-evaluate (new-state :o :x board))))))
+        (do (should= 0 (score-state (new-state :x :o board)))
+            (should= 0 (score-state (new-state :o :x board))))))
 
     (it "returns 1 if the current player can make a winning move"
       (let [board [:x :x :_
                    :_ :_ :_
                    :_ :_ :_]]
-        (should= 1 (recursively-evaluate (new-state :x :o board)))))
+        (should= 1 (score-state (new-state :x :o board)))))
 
     (it "returns -1 if current player can't prevent other player from winning"
       (let [board [:x :x :_
                    :x :_ :_
                    :_ :_ :_]]
-        (should= -1 (recursively-evaluate (new-state :o :x board)))))
+        (should= -1 (score-state (new-state :o :x board)))))
 
     (it "returns 0 if the game would end in a draw with optimal play"
       (let [board [:x :x :o
                    :o :o :_
                    :x :_ :_]]
-        (should= 0 (recursively-evaluate (new-state :x :o board))))))
+        (should= 0 (score-state (new-state :x :o board))))))
 
   (context "generating subsequent game states"
 

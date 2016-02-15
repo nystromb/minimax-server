@@ -1,7 +1,7 @@
-(ns minimax-server.tic-tac-toe-spec
+(ns minimax-server.game-spec
   (:require
     [speclj.core :refer :all]
-    [minimax-server.tic-tac-toe :refer :all]))
+    [minimax-server.game :refer :all]))
 
 (describe "tic tac toe"
 
@@ -95,4 +95,9 @@
       (let [board [:o :x :o
                    :_ :x :_
                    :o :_ :_]]
-        (should-not-be game-over? board)))))
+        (should-not-be game-over? board))))
+
+  (context "getting the other player's mark"
+
+    (it "returns the other player's mark out of the marks given"
+      (should= :o (other-mark :x [:x :o])))))
