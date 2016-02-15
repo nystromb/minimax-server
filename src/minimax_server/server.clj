@@ -1,19 +1,12 @@
 (ns minimax-server.server
   (:import
     [scarvill.httpserver.server Server ServerConfiguration HttpService Logger]
-    [scarvill.httpserver.resource FileResource]
-    [scarvill.httpserver.routing GetRouteResource]
     [java.io PrintStream ByteArrayOutputStream])
   (:require
     [minimax-server.router :refer [new-router best-move-service game-state-service]]))
 
-(defn web-interface []
-  (new GetRouteResource
-    (new FileResource (.toPath (clojure.java.io/file "./web_interface/dist/index.html")))))
-
 (def ttt-router
   (new-router {
-    "/" (web-interface)
     "/api/best_move" (best-move-service)
     "/api/game_state" (game-state-service)}))
 
