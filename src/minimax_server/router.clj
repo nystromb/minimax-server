@@ -51,8 +51,14 @@
   (let [request-parameters (into [] (.getParameterNames request))]
     (every? #(includes? % request-parameters) expected-parameters)))
 
+(defn valid-board-parameter? [board]
+  (let [marks (str/split board #",")]
+    (and (< 8 (count marks)) (not (includes? "" marks)))))
+
 (defn invalid? [request]
-  (not (has-parameters? ["board" "current_player"] request)))
+  (or
+    (not (has-parameters? ["board" "current_player"] request))
+    (not (valid-board-parameter? (.getParameterValue request "board")))))
 
 (defn game-state-service []
   (reify Function (apply [this request]

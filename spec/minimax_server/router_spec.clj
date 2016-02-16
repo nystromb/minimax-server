@@ -98,28 +98,42 @@
       (let [example-request (ttt-request "o" "x,x,_,o,_,_,_,_,_")]
         (should= "2" (get-body-as-str (.apply (best-move-service) example-request))))))
 
-  (describe "handling bad client requests"
+  (describe "handling malformed client requests"
 
-    (it "returns a 400 response when a request given to best-move-service doesn't have a current_player"
+    (it "returns a 400 response if a request given to best-move-service doesn't have a current_player"
       (let [bad-request (.build (doto (new RequestBuilder)
                           (.setParameter "board" "_,_,_,_,_,_,_,_,_")
                           (.setURI "/foo")))]
         (should= (Status/BAD_REQUEST) (.getStatus (.apply (best-move-service) bad-request)))))
 
-    (it "returns a 400 response when a request given to best-move-service doesn't have a board"
+    (it "returns a 400 response if a request given to best-move-service doesn't have a board"
       (let [bad-request (.build (doto (new RequestBuilder)
                           (.setParameter "current_player" "x")
                           (.setURI "/foo")))]
         (should= (Status/BAD_REQUEST) (.getStatus (.apply (best-move-service) bad-request)))))
 
-    (it "returns a 400 response when a request given to game-state-service doesn't have a current_player"
+    (it "returns a 400 response if a request given to game-state-service doesn't have a current_player"
       (let [bad-request (.build (doto (new RequestBuilder)
                           (.setParameter "board" "_,_,_,_,_,_,_,_,_")
                           (.setURI "/foo")))]
         (should= (Status/BAD_REQUEST) (.getStatus (.apply (game-state-service) bad-request)))))
 
-    (it "returns a 400 response when a request given to game-state-service doesn't have a board"
+    (it "returns a 400 response if a request given to game-state-service doesn't have a board"
       (let [bad-request (.build (doto (new RequestBuilder)
                           (.setParameter "current_player" "x")
                           (.setURI "/foo")))]
-        (should= (Status/BAD_REQUEST) (.getStatus (.apply (game-state-service) bad-request)))))))
+        (should= (Status/BAD_REQUEST) (.getStatus (.apply (game-state-service) bad-request)))))
+
+    (it "returns a 400 response if a board parameter contains fewer than 9 spaces"
+      (let [bad-request (.build (doto (new RequestBuilder)
+                          (.setParameter "board" "1,2,3,4,5,6,7,8")
+                          (.setParameter "current_player" "x")
+                          (.setURI "/foo")))]
+        (should= (Status/BAD_REQUEST) (.getStatus (.apply (best-move-service) bad-request)))))
+
+    (it "returns a 400 response if a board parameter is missing a mark in any space"
+      (let [bad-request (.build (doto (new RequestBuilder)
+                          (.setParameter "board" "1,2,3,4,,6,7,8,9")
+                          (.setParameter "current_player" "x")
+                          (.setURI "/foo")))]
+        (should= (Status/BAD_REQUEST) (.getStatus (.apply (best-move-service) bad-request)))))))
