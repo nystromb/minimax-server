@@ -35,7 +35,7 @@
   (.build (doto (new RequestBuilder)
     (.setParameter "current_player" current-player)
     (.setParameter "board" board)
-    (.setURI "/"))))
+    (.setURI "/foo"))))
 
 (describe "routing"
 
@@ -96,4 +96,30 @@
 
     (it "returns the best move selected via minimax in the response body"
       (let [example-request (ttt-request "o" "x,x,_,o,_,_,_,_,_")]
-        (should= "2" (get-body-as-str (.apply (best-move-service) example-request)))))))
+        (should= "2" (get-body-as-str (.apply (best-move-service) example-request))))))
+
+  (describe "handling bad client requests"
+
+    (it "returns a 400 response when a request given to best-move-service doesn't have a current_player"
+      (let [bad-request (.build (doto (new RequestBuilder)
+                          (.setParameter "board" "_,_,_,_,_,_,_,_,_")
+                          (.setURI "/foo")))]
+        (should= (Status/BAD_REQUEST) (.getStatus (.apply (best-move-service) bad-request)))))
+
+    (it "returns a 400 response when a request given to best-move-service doesn't have a board"
+      (let [bad-request (.build (doto (new RequestBuilder)
+                          (.setParameter "current_player" "x")
+                          (.setURI "/foo")))]
+        (should= (Status/BAD_REQUEST) (.getStatus (.apply (best-move-service) bad-request)))))
+
+    (it "returns a 400 response when a request given to game-state-service doesn't have a current_player"
+      (let [bad-request (.build (doto (new RequestBuilder)
+                          (.setParameter "board" "_,_,_,_,_,_,_,_,_")
+                          (.setURI "/foo")))]
+        (should= (Status/BAD_REQUEST) (.getStatus (.apply (game-state-service) bad-request)))))
+
+    (it "returns a 400 response when a request given to game-state-service doesn't have a board"
+      (let [bad-request (.build (doto (new RequestBuilder)
+                          (.setParameter "current_player" "x")
+                          (.setURI "/foo")))]
+        (should= (Status/BAD_REQUEST) (.getStatus (.apply (game-state-service) bad-request)))))))
