@@ -33,20 +33,45 @@
     (.setHeader "Access-Control-Allow-Origin" "*")
     (.setBody (byte-array (map byte (str body)))))))
 
+(def client-error-response
+  (.build (doto (new ResponseBuilder)
+    (.setStatus (Status/BAD_REQUEST))
+    (.setBody (byte-array (map byte (str "400 Bad Request")))))))
+
 (defn game-state-label [{:keys [board active-player inactive-player]}]
   (cond
     (is-draw? board) "tied"
     (game-over? board) "won"
     :else "inProgress"))
 
+(defn includes? [element collection]
+  ((comp boolean some) #{element} collection))
+
+(defn has-parameters? [expected-parameters request]
+  (let [request-parameters (into [] (.getParameterNames request))]
+    (every? #(includes? % request-parameters) expected-parameters)))
+
+(defn valid-board-parameter? [board]
+  (let [marks (str/split board #",")]
+    (and (< 8 (count marks)) (not (includes? "" marks)))))
+
+(defn invalid? [request]
+  (or
+    (not (has-parameters? ["board" "current_player"] request))
+    (not (valid-board-parameter? (.getParameterValue request "board")))))
+
 (defn game-state-service []
   (reify Function (apply [this request]
-    (let [game-state (get-game-state request)]
-      (generate-response
-        (json/write-str {
-          :bestMove (minimax game-state)
-          :gameState (game-state-label game-state)}))))))
+    (if (invalid? request)
+      client-error-response
+      (let [game-state (get-game-state request)]
+        (generate-response
+          (json/write-str {
+            :bestMove (minimax game-state)
+            :gameState (game-state-label game-state)})))))))
 
 (defn best-move-service []
   (reify Function (apply [this request]
-    (generate-response (minimax (get-game-state request))))))
+    (if (invalid? request)
+      client-error-response
+      (generate-response (minimax (get-game-state request)))))))
